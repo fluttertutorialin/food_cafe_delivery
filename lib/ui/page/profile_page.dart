@@ -1,64 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../controller/controller.dart';
+import 'package:line_icons/line_icons.dart';
 import '../../resource/colors.dart';
 import '../../resource/images.dart';
 import '../../resource/style.dart';
+import '../../resource/routes.dart';
 import '../../resource/value.dart';
-import '../../utils/state_status.dart';
-import '../../utils/extensions.dart';
 
-class ReportPage extends StatelessWidget {
-  const ReportPage({Key key}) : super(key: key);
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: <
-            Widget>[
-      SliverToBoxAdapter(child: _topHeader()),
-      Obx(() => ReportController.to.stateStatus.value == StateStatus.loading
-              ? SliverFillRemaining(child: circleProgressIndicator())
-              : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                  var report = ReportController.to.rxReportPastOrderList[index];
-                  return Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      color: Colors.grey.withOpacity(0.1),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(report.title,
-                                      style: allReportLabelStyle(Colors.black)),
-                                  Text(report.message,
-                                      style: allReportDescriptionStyle(
-                                          Colors.black.withOpacity(0.8)))
-                                ]),
-                            Text('${report.success}',
-                                style: allReportCounterStyle(Colors.deepOrange))
-                          ]));
-                },
-                      childCount:
-                          ReportController.to.rxReportPastOrderList.length))
-          /*SliverPadding(
-                  padding: EdgeInsets.all(8.0),
-                  sliver: SliverGrid.count(
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 10.0,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.62,
-                    children: list.map((model) => Container()).toList()
-                  )
-                )*/
-          )
-    ]));
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light,
+            child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: <Widget>[
+                  SliverToBoxAdapter(child: _topHeader()),
+                  SliverToBoxAdapter(child: _menuWidget()),
+                ])));
   }
+
+  _menuWidget() => Column(children: [
+        SizedBox(height: 12.w),
+        Container(
+            padding: const EdgeInsets.all(15),
+            child: Row(children: [
+              const Icon(LineIcons.bell),
+              SizedBox(width: 15.w),
+              Text(notification, style: profileMenuStyle)
+            ])),
+        const Divider(),
+        SizedBox(height: 12.w),
+        Container(
+            padding: const EdgeInsets.all(15),
+            child: Row(children: [
+              const Icon(LineIcons.readme),
+              SizedBox(width: 15.w),
+              Text(aboutUs, style: profileMenuStyle)
+            ])),
+        const Divider(),
+        SizedBox(height: 12.w),
+        Container(
+            padding: const EdgeInsets.all(15),
+            child: Row(children: [
+              const Icon(LineIcons.locationArrow),
+              SizedBox(width: 15.w),
+              Text(contactUs, style: profileMenuStyle)
+            ])),
+        const Divider(),
+        SizedBox(height: 12.w),
+        InkWell(
+            child: Container(
+                padding: const EdgeInsets.all(15),
+                child: Row(children: [
+                  const Icon(LineIcons.lock),
+                  SizedBox(width: 15.w),
+                  Text(logout, style: profileMenuStyle)
+                ])),
+            onTap: () {
+              Get.offAllNamed(loginRoute);
+            }),
+        const Divider()
+      ]);
 
   _topHeader() {
     return Container(
@@ -66,10 +74,9 @@ class ReportPage extends StatelessWidget {
         child: Stack(children: [
           Column(mainAxisAlignment: MainAxisAlignment.end, children: [
             _headerSetting(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _todayReportCounter(),
-            const SizedBox(height: 13),
-            _bottomVip()
+            const SizedBox(height: 13)
           ])
         ]));
   }
@@ -87,47 +94,31 @@ class ReportPage extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(titleReport, style: titleReportStyle)]))),
-        Expanded(
-            flex: 0,
-            child: IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(searchClearIcon, size: 18, color: Colors.white)))
-      ]));
-
-  _bottomVip() => Container(
-      color: Colors.white.withOpacity(0.1),
-      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(labelAllReport.toUpperCase(), style: todayReportStyle),
+                    children: [Text('Kamlesh', style: titleReportStyle)]))),
       ]));
 
   _todayReportCounter() => Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(children: [
-          Text(drawerMenuPending, style: reportLabelStyle),
-          const SizedBox(height: 3),
-          Obx(() => Text('${ReportController.to.todayPendingOrderTotal.value}',
-              style: reportCounterStyle))
+          Text('PENDING', style: reportLabelStyle),
+          const SizedBox(height: 1),
+          Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text(drawerMenuAccepted, style: reportLabelStyle),
-          const SizedBox(height: 3),
-          Obx(() => Text('${ReportController.to.todayAcceptedOrderTotal.value}',
-              style: reportCounterStyle))
+          Text('PICK UP', style: reportLabelStyle),
+          const SizedBox(height: 1),
+          Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text(drawerMenuReady, style: reportLabelStyle),
-          const SizedBox(height: 3),
-          Obx(() => Text('${ReportController.to.todayReadyOrderTotal.value}',
-              style: reportCounterStyle))
+          Text('DISPATCHED', style: reportLabelStyle),
+          const SizedBox(height: 1),
+          Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text(drawerMenuDispatched, style: reportLabelStyle),
-          const SizedBox(height: 3),
-          Obx(() => Text('${ReportController.to.todayDispatchedOrderTotal.value}',
-              style: reportCounterStyle))
+          Text('CANCEL', style: reportLabelStyle),
+          const SizedBox(height: 1),
+          Text('00', style: reportCounterStyle)
         ])
       ]));
 }

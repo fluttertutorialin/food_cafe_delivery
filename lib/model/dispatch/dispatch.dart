@@ -1,4 +1,4 @@
-class PickUp {
+class Dispatch {
   String? uniqueId,
       orderId,
       customerPaymentType,
@@ -6,11 +6,11 @@ class PickUp {
       customerMobile,
       customerAddress,
       customerProfilePicture,
-      pickUpDateTime;
-  int? orderTotalItem;
+      dispatchDateTime;
+  int? orderTotalQuantity;
   double? orderTotalAmount;
 
-  PickUp(
+  Dispatch(
       {this.uniqueId,
       this.orderId,
       this.customerPaymentType,
@@ -18,7 +18,7 @@ class PickUp {
       this.customerMobile,
       this.customerAddress,
       this.customerProfilePicture,
-      this.pickUpDateTime,
-      this.orderTotalItem,
+      this.dispatchDateTime,
+      this.orderTotalQuantity,
       this.orderTotalAmount});
 }

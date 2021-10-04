@@ -1,6 +1,7 @@
-class Dispatch {
+class OrderHistory {
   String? uniqueId,
       orderId,
+      orderStatus,
       customerPaymentType,
       customerName,
       customerMobile,
@@ -10,9 +11,10 @@ class Dispatch {
   int? orderTotalQuantity;
   double? orderTotalAmount;
 
-  Dispatch(
+  OrderHistory(
       {this.uniqueId,
       this.orderId,
+      this.orderStatus,
       this.customerPaymentType,
       this.customerName,
       this.customerMobile,

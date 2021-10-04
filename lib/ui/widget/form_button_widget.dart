@@ -30,7 +30,7 @@ class FormButtonWidget extends StatelessWidget {
         child: MaterialButton(
             elevation: 0,
             onPressed: onPressed,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             color: color,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

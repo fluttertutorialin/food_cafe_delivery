@@ -1,89 +1,259 @@
 import 'package:flutter/material.dart';
-import 'package:food_cafe_delivery/resource/colors.dart';
-import 'package:food_cafe_delivery/resource/images.dart';
-import 'package:food_cafe_delivery/resource/style.dart';
-import 'package:food_cafe_delivery/resource/value.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
+import '../../controller/order_detail_controller.dart';
+import '../../resource/colors.dart';
+import '../../resource/images.dart';
+import '../../resource/style.dart';
+import '../../resource/value.dart';
+import '../../resource/api.dart';
 
-class DispatchPage extends StatelessWidget {
-  const DispatchPage({Key? key}) : super(key: key);
+class OrderDetailPage extends GetView<OrderDetailController> {
+  const OrderDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: appBarColor,
+            iconTheme: const IconThemeData(color: primarySwatchColor),
             elevation: appBarElevation,
-            title: Text(appName, style: appBarTitleStyle)),
-        body: ListView(children: [
-          Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.grey.withOpacity(0.1),
-                            backgroundImage: const AssetImage(profileImage)),
-                        SizedBox(width: 20.sp),
-                        Expanded(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(children: [
-                                      Text('10011111', style: idStyle),
-                                      SizedBox(width: 10.sp),
-                                      Text('(ONLINE)', style: paymentOnlineStyle)
-                                    ]),
-
-                                    Text('00-00-0000',
-                                        style: orderDispatchDate),
-                                  ]),
-                              Row(children: [
-                                Expanded(
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                      Text('Lakhani kamlesh',
-                                          style: customerNameStyle),
-                                      Text(
-                                          'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
-                                          style: customerAddressStyle)
-                                    ])),
-                                Image.asset(callImage, width: 35, height: 35)
-                              ]),
-                              Row(children: [
-                                Text('Total Items: ', style: labelStyle),
-                                Text('1', style: totalItemStyle)
-                              ]),
-                              Row(children: [
-                                Text('Total Amount: ', style: labelStyle),
-                                Text('Rs. 1000', style: totalItemStyle),
-                              ]),
-                              SizedBox(height: 10.sp),
-                              Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(5.0),
-                                            bottomRight: Radius.circular(5.0),
-                                            topLeft: Radius.circular(5.0),
-                                            bottomLeft: Radius.circular(5.0)),
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 3, 10, 3),
-                                      child: Text('ORDER DETAILS',
-                                          style: pickUpButtonStyle)))
-                            ]))
-                      ])))
-        ]));
+            title: Text(orderDetailTitle, style: appBarTitleStyle),
+            actions: [
+              Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: Image.asset(callImage, width: 30, height: 30))
+            ]),
+        bottomNavigationBar: Container(
+            padding: const EdgeInsets.all(5),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0))),
+                  padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                  child: Text(dispatchButton, style: pickUpButtonStyle)),
+              SizedBox(width: 40.sp),
+              Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0))),
+                  padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                  child: Text(cancelButton, style: pickUpButtonStyle))
+            ])),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          _customerDetailTopWidget(),
+          SizedBox(height: 20.sp),
+          _orderSummaryWidget(),
+          _customerDetailWidget(),
+          SizedBox(height: 10.sp),
+          _orderDetailWidget()
+        ])));
   }
+
+  _customerDetailTopWidget() => Container(
+      padding: const EdgeInsets.all(10),
+      color: Colors.grey.withOpacity(0.1),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        CircleAvatar(
+            radius: 25,
+            backgroundColor: Colors.grey.withOpacity(0.1),
+            backgroundImage: const AssetImage(profileImage)),
+        SizedBox(width: 20.sp),
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(controller.dispatch!.customerName!,
+              style: orderCustomerNameStyle),
+          Row(children: [
+            Text(controller.dispatch!.orderId!, style: idStyle),
+            SizedBox(width: 20.sp),
+            Text(controller.dispatch!.dispatchDateTime!,
+                style: orderDetailDispatchDate)
+          ])
+        ]))
+      ]));
+
+  _orderSummaryWidget() => Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(labelOrderSummary.toUpperCase(),
+            style: orderDetailHeaderTitleStyle),
+        SizedBox(height: 10.sp),
+        Obx(() => Column(
+            children: controller.orderDetail!.orderSummaryList!
+                .map((item) => Row(children: [
+                      Flexible(
+                          flex: 3500,
+                          child: Row(children: [
+                            Container(
+                                margin: const EdgeInsets.only(bottom: 3),
+                                child: Image.asset(
+                                    item!.isVegNonVeg! == vegIcon
+                                        ? foodVegImage
+                                        : foodNonVegImage,
+                                    height: 12,
+                                    width: 12)),
+                            const SizedBox(width: 5),
+                            Text(item.foodName!, style: foodNameStyle),
+                            const SizedBox(width: 5),
+                            Text(
+                                item.orderType == fullOrderTypeApi
+                                    ? fullOrderType
+                                    : halfOrderType,
+                                style: orderTypeStyle)
+                          ])),
+                      Flexible(
+                          flex: 600,
+                          child: Row(children: [
+                            Text(quantitySymbol, style: quantitySymbolStyle),
+                            Text('${item.quantity!}', style: quantityStyle)
+                          ])),
+                      Flexible(
+                          flex: 1100,
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text('$rsSymbol ${item.price!}',
+                                  style: menuPriceStyle)))
+                    ]))
+                .toList())),
+        Divider(color: Colors.black.withOpacity(0.2)),
+        Row(children: [
+          Flexible(
+              flex: 3500,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      Text(paymentTypeLabel.toUpperCase(),
+                          style: paymentPaidStatusStyle),
+                      const SizedBox(width: 3),
+                      Text('(${controller.dispatch!.customerPaymentType!})',
+                          style: paymentCollectStyle)
+                    ]),
+                    Row(children: [
+                      Text(totalLabel, style: totalQuantityStyle),
+                      const SizedBox(width: 3),
+                      GestureDetector(
+                          onTap: () {},
+                          child: Image.asset(informationImage,
+                              height: 15, width: 15)),
+                      const SizedBox(width: 3)
+                    ])
+                  ])),
+          Flexible(
+              flex: 600,
+              child: Row(children: [
+                Text(quantitySymbol, style: quantitySymbolStyle),
+                Text('${controller.dispatch!.orderTotalQuantity!}',
+                    style: quantityStyle)
+              ])),
+          Flexible(
+              flex: 1100,
+              child: Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                      '$rsSymbol ${controller.dispatch!.orderTotalAmount!}',
+                      style: totalAmountStyle)))
+        ]),
+        Divider(color: Colors.black.withOpacity(0.2)),
+      ]));
+
+  _customerDetailWidget() => Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(customerDetailLabel, style: orderDetailHeaderTitleStyle),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.user, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(fullNameLabel, style: orderDetailLabelStyle),
+                Text(controller.dispatch!.customerName!,
+                    style: orderDetailTitleStyle),
+              ]))
+        ]),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.mobilePhone, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(mobileLabel, style: orderDetailLabelStyle),
+                Text(controller.dispatch!.customerMobile!,
+                    style: orderDetailTitleStyle)
+              ]))
+        ]),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.locationArrow, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(addressLabel, style: orderDetailLabelStyle),
+                Text(controller.dispatch!.customerAddress!,
+                    style: orderDetailTitleStyle)
+              ]))
+        ])
+      ]));
+
+  _orderDetailWidget() => Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(orderDetailLabel.toUpperCase(),
+            style: orderDetailHeaderTitleStyle),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.user, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(orderAcceptLabel, style: orderDetailLabelStyle),
+                Obx(() => Text(
+                    controller.orderDetail!.orderDetail!.orderAcceptName!,
+                    style: orderDetailTitleStyle))
+              ]))
+        ]),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.clock, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(orderDateLabel, style: orderDetailLabelStyle),
+                Obx(() => Text(
+                    controller.orderDetail!.orderDetail!.orderRequestDateTime!,
+                    style: orderDetailTitleStyle))
+              ]))
+        ]),
+        SizedBox(height: 10.sp),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(LineIcons.clock, color: Colors.black54),
+          SizedBox(width: 20.sp),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(orderAcceptDateLabel, style: orderDetailLabelStyle),
+                Obx(() => Text(
+                    controller.orderDetail!.orderDetail!.orderRequestDateTime!,
+                    style: orderDetailTitleStyle))
+              ]))
+        ]),
+      ]));
 }

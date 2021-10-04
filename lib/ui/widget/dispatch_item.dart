@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_cafe_delivery/resource/value.dart';
-import '../../model/pick_up/pick_up.dart';
+import '../../model/dispatch/dispatch.dart';
+import '../../resource/value.dart';
 import '../../resource/images.dart';
 import '../../resource/style.dart';
 
-class PickUpItem extends StatelessWidget {
-  final PickUp? pickUp;
-  final Function? pickupClick;
+class DispatchItem extends StatelessWidget {
+  final Dispatch? dispatch;
+  final Function() dispatchClick;
 
-  const PickUpItem({Key? key, this.pickUp, this.pickupClick}) : super(key: key);
+  const DispatchItem({Key? key, this.dispatch, required this.dispatchClick})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +31,12 @@ class PickUpItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(children: [
-                            Text(pickUp!.orderId!, style: idStyle),
+                            Text(dispatch!.orderId!, style: idStyle),
                             SizedBox(width: 10.sp),
-                            Text('(${pickUp!.customerPaymentType!})',
+                            Text('(${dispatch!.customerPaymentType!})',
                                 style: paymentOnlineStyle)
                           ]),
-                          Text(pickUp!.pickUpDateTime!,
+                          Text(dispatch!.dispatchDateTime!,
                               style: orderDispatchDate)
                         ]),
                     Row(children: [
@@ -43,20 +44,21 @@ class PickUpItem extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                            Text(pickUp!.customerName!,
+                            Text(dispatch!.customerName!,
                                 style: customerNameStyle),
-                            Text(pickUp!.customerAddress!,
+                            Text(dispatch!.customerAddress!,
                                 style: customerAddressStyle)
                           ])),
                       Image.asset(callImage, width: 35, height: 35)
                     ]),
                     Row(children: [
-                      Text('Total Items: ', style: labelStyle),
-                      Text('${pickUp!.orderTotalItem}', style: totalItemStyle)
+                      Text(totalItemLabel, style: labelStyle),
+                      Text('${dispatch!.orderTotalQuantity}',
+                          style: totalItemStyle)
                     ]),
                     Row(children: [
-                      Text('Total Amount: ', style: labelStyle),
-                      Text('$rsSymbol ${pickUp!.orderTotalAmount}',
+                      Text(totalAmountLabel, style: labelStyle),
+                      Text('$rsSymbol ${dispatch!.orderTotalAmount}',
                           style: totalItemStyle)
                     ]),
                     SizedBox(height: 10.sp),
@@ -70,9 +72,9 @@ class PickUpItem extends StatelessWidget {
                                         Radius.circular(5.0))),
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                                child: Text(pickUpButton,
+                                child: Text(dispatchButton,
                                     style: pickUpButtonStyle)),
-                            onTap: pickupClick!()))
+                            onTap: dispatchClick))
                   ]))
             ])));
   }

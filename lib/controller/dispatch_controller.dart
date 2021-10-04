@@ -1,72 +1,73 @@
-import 'package:food_cafe_delivery/model/pick_up/pick_up.dart';
-import 'package:food_cafe_delivery/model/pick_up/pick_up_response.dart';
+import '../model/dispatch/dispatch.dart';
+import '../model/dispatch/dispatch_response.dart';
 import 'package:get/get.dart';
 
-class PickUpController extends GetxController {
-  PickUpController();
+class DispatchController extends GetxController {
+  DispatchController();
 
-  final _pickUpRxList = Rxn<List<PickUp?>>();
-  List<PickUp?>? get pickUpList => _pickUpRxList.value;
+  final _dispatchRxList = Rxn<List<Dispatch?>>();
+  List<Dispatch?>? get dispatchList => _dispatchRxList.value;
 
   @override
   void onInit() {
     super.onInit();
-    _pickUpFetch();
+    _dispatchFetch();
   }
 
-  _pickUpFetch() {
-    var pickUpResponse = PickUpResponse(pickUpList: [
-      PickUp(
+  _dispatchFetch() {
+    var dispatchResponse = DispatchResponse(dispatchList: [
+      Dispatch(
           uniqueId: '1',
           orderId: '100001',
           customerPaymentType: 'online',
           customerName: 'Lakhani kamlesh',
           customerMobile: '9586331823',
-          customerAddress: 'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
+          customerAddress:
+              'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
           customerProfilePicture: '',
-          pickUpDateTime: '4-10-2021 10:00 PM',
-          orderTotalItem: 3,
-          orderTotalAmount: 1000.10),
-      PickUp(
+          dispatchDateTime: '4-10-2021 10:00 PM',
+          orderTotalQuantity: 4,
+          orderTotalAmount: 450.10),
+      Dispatch(
           uniqueId: '1',
           orderId: '100001',
           customerPaymentType: 'online',
           customerName: 'Lakhani kamlesh',
           customerMobile: '9586331823',
-          customerAddress: 'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
+          customerAddress:
+              'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
           customerProfilePicture: '',
-          pickUpDateTime: '4-10-2021 10:00 PM',
-          orderTotalItem: 3,
-          orderTotalAmount: 1000.10),
-      PickUp(
+          dispatchDateTime: '4-10-2021 10:00 PM',
+          orderTotalQuantity: 4,
+          orderTotalAmount: 450.10),
+      Dispatch(
           uniqueId: '1',
           orderId: '100001',
           customerPaymentType: 'online',
           customerName: 'Lakhani kamlesh',
           customerMobile: '9586331823',
-          customerAddress: 'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
+          customerAddress:
+              'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
           customerProfilePicture: '',
-          pickUpDateTime: '4-10-2021 10:00 PM',
-          orderTotalItem: 3,
-          orderTotalAmount: 1000.10),
-      PickUp(
+          dispatchDateTime: '4-10-2021 10:00 PM',
+          orderTotalQuantity: 4,
+          orderTotalAmount: 450.10),
+      Dispatch(
           uniqueId: '1',
           orderId: '100001',
           customerPaymentType: 'online',
           customerName: 'Lakhani kamlesh',
           customerMobile: '9586331823',
-          customerAddress: 'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
+          customerAddress:
+              'To. Ravani (Kuba) Ta. Visavadar Dis. Junagadh 362130',
           customerProfilePicture: '',
-          pickUpDateTime: '4-10-2021 10:00 PM',
-          orderTotalItem: 3,
-          orderTotalAmount: 1000.10)
+          dispatchDateTime: '4-10-2021 10:00 PM',
+          orderTotalQuantity: 4,
+          orderTotalAmount: 450.10)
     ]);
 
-    _pickUpRxList.value = pickUpResponse.pickUpList!;
+    _dispatchRxList.value = dispatchResponse.dispatchList!;
   }
 
-  orderSingleRemove(){
-
-  }
-
+  orderDispatchSingleRemove() {}
 }

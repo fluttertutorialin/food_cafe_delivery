@@ -1,31 +1,30 @@
-import 'package:food_cafe_delivery/model/dispatch/dispatch.dart';
-
+import '../model/order_history/order_history.dart';
 import '../model/order_detail/order_detail.dart';
 import '../model/order_detail/order_detail_response.dart';
 import '../model/order_detail/order_summary.dart';
 import 'package:get/get.dart';
 
-class OrderDetailController extends GetxController {
-  OrderDetailController();
+class OrderHistoryDetailController extends GetxController {
+  OrderHistoryDetailController();
 
   final _orderDetailRx = Rxn<OrderDetailResponse?>();
   OrderDetailResponse? get orderDetail => _orderDetailRx.value;
-  Dispatch? dispatch;
+  OrderHistory? orderHistory;
 
   @override
   void onInit() {
     super.onInit();
-    dispatch = Get.arguments;
-    _orderDetailFetch();
+    orderHistory = Get.arguments;
+    _orderHistoryDetailFetch();
   }
 
-  _orderDetailFetch() {
+  _orderHistoryDetailFetch() {
     var orderDetailResponse = OrderDetailResponse(
         orderDetail: OrderDetail(
-          orderAcceptName: 'Admin',
-          orderAcceptDateTime: '4-10-2021 11:00 AM',
-          orderRequestDateTime: '4-10-2021 11:00 AM',
-        ),
+            orderAcceptName: 'Admin',
+            orderAcceptDateTime: '4-10-2021 11:00 AM',
+            orderRequestDateTime: '4-10-2021 11:00 AM',
+            orderPickupDateTime: '4-10-2021 11:00 AM'),
         orderSummaryList: [
           OrderSummary(
               foodName: 'Chicken birtani',

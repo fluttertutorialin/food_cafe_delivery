@@ -1,7 +1,7 @@
-import 'dispatch.dart';
+import 'order_history.dart';
 
-class DispatchResponse {
-  List<Dispatch?>? dispatchList;
+class OrderHistoryResponse {
+  List<OrderHistory?>? orderHistoryList;
 
-  DispatchResponse({this.dispatchList});
+  OrderHistoryResponse({this.orderHistoryList});
 }

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../model/dispatch/dispatch.dart';
+import '../../model/order_history/order_history.dart';
 import '../../resource/value.dart';
 import '../../resource/images.dart';
 import '../../resource/style.dart';
 
-class DispatchItem extends StatelessWidget {
-  final Dispatch? dispatch;
-  final Function() dispatchClick;
+class OrderHistoryItem extends StatelessWidget {
+  final OrderHistory? orderHistory;
+  final Function() orderHistoryClick;
 
-  const DispatchItem({Key? key, this.dispatch, required this.dispatchClick})
+  const OrderHistoryItem(
+      {Key? key, this.orderHistory, required this.orderHistoryClick})
       : super(key: key);
 
   @override
@@ -31,12 +32,12 @@ class DispatchItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(children: [
-                            Text(dispatch!.orderId!, style: idStyle),
+                            Text(orderHistory!.orderId!, style: idStyle),
                             SizedBox(width: 10.sp),
-                            Text('(${dispatch!.customerPaymentType!})',
+                            Text('(${orderHistory!.customerPaymentType!})',
                                 style: paymentOnlineStyle)
                           ]),
-                          Text(dispatch!.dispatchDateTime!,
+                          Text(orderHistory!.dispatchDateTime!,
                               style: orderDispatchDate)
                         ]),
                     Row(children: [
@@ -44,20 +45,21 @@ class DispatchItem extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                            Text(dispatch!.customerName!,
+                            Text(orderHistory!.customerName!,
                                 style: customerNameStyle),
-                            Text(dispatch!.customerAddress!,
+                            Text(orderHistory!.customerAddress!,
                                 style: customerAddressStyle)
                           ])),
                       Image.asset(callImage, width: 35, height: 35)
                     ]),
                     Row(children: [
-                      Text('Total Items: ', style: labelStyle),
-                      Text('${dispatch!.orderTotalQuantity}', style: totalItemStyle)
+                      Text(totalItemLabel, style: labelStyle),
+                      Text('${orderHistory!.orderTotalQuantity}',
+                          style: totalItemStyle)
                     ]),
                     Row(children: [
-                      Text('Total Amount: ', style: labelStyle),
-                      Text('$rsSymbol ${dispatch!.orderTotalAmount}',
+                      Text(totalAmountLabel, style: labelStyle),
+                      Text('$rsSymbol ${orderHistory!.orderTotalAmount}',
                           style: totalItemStyle)
                     ]),
                     SizedBox(height: 10.sp),
@@ -71,9 +73,9 @@ class DispatchItem extends StatelessWidget {
                                         Radius.circular(5.0))),
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                                child: Text(dispatchButton,
+                                child: Text(orderHistory!.orderStatus!,
                                     style: pickUpButtonStyle)),
-                            onTap: dispatchClick))
+                            onTap: orderHistoryClick))
                   ]))
             ])));
   }

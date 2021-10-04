@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../resource/style.dart';
 
 class TextFieldComponent extends StatelessWidget {
   final String labelText;
@@ -21,7 +22,7 @@ class TextFieldComponent extends StatelessWidget {
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
 
-   const TextFieldComponent(
+  const TextFieldComponent(
       {Key? key,
       required this.labelText,
       this.controller,
@@ -43,7 +44,8 @@ class TextFieldComponent extends StatelessWidget {
       this.autoValidateMode = AutovalidateMode.onUserInteraction,
       this.addHint = false,
       this.suffixIconConstraints,
-      this.obscureText = false}) : super(key: key);
+      this.obscureText = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,27 +80,25 @@ class TextFieldComponent extends StatelessWidget {
             decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-                filled: true,
-                fillColor: Get.theme.primaryColor,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                        color: Get.theme.primaryColor.withOpacity(0.05))),
+                    borderSide:
+                        BorderSide(color: Colors.grey.withOpacity(0.05))),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                        color: Get.theme.primaryColor.withOpacity(0.05))),
+                    borderSide:
+                        BorderSide(color: Colors.grey.withOpacity(0.05))),
                 errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                        color: Get.theme.primaryColor.withOpacity(0.05))),
+                    borderSide:
+                        BorderSide(color: Colors.red.withOpacity(0.05))),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
                         color: Get.theme.accentColor.withOpacity(0.8),
                         width: 1)),
                 hintText: labelText,
-                hintStyle: Get.textTheme.headline4!.merge(const TextStyle(fontSize: 12)),
+                hintStyle: hintTextFieldStyle,
                 prefixIconConstraints:
                     const BoxConstraints(maxHeight: 16, maxWidth: 51),
                 prefixIcon: prefixIcon == null
@@ -111,4 +111,3 @@ class TextFieldComponent extends StatelessWidget {
                     const BoxConstraints(maxHeight: 16, maxWidth: 51))));
   }
 }
-

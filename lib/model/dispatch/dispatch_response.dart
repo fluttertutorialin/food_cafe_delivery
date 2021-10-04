@@ -1,7 +1,7 @@
-import 'pick_up.dart';
+import 'dispatch.dart';
 
-class PickUpResponse {
-  List<PickUp?>? pickUpList;
+class DispatchResponse {
+  List<Dispatch?>? dispatchList;
 
-  PickUpResponse({this.pickUpList});
+  DispatchResponse({this.dispatchList});
 }
