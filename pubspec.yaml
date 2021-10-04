@@ -1,0 +1,82 @@
+name: food_cafe_delivery
+description: A new Flutter project.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  get:
+  line_icons: 2.0.1
+  dotted_border:
+  flutter_dash:
+  recase:
+  flutter_automation:
+  get_storage:
+  cached_network_image:
+  logger:
+  url_launcher:
+  easy_popup:
+  image_picker:
+  collection:
+  intl:
+  simple_animations:
+  flutter_launcher_icons:
+  path_provider:
+  json_annotation:
+  flutter_screenutil:
+  connectivity:
+  water_drop_nav_bar:
+  timelines:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  json_serializable:
+  flutter_lints:
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/food_cafe.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Baloo Tamma 2 Regular
+      fonts:
+        - asset: assets/fonts/BalooTamma_Regular.ttf
+
+    - family: Baloo Tamma 2 Medium
+      fonts:
+        - asset: assets/fonts/BalooTamma_Medium.ttf
+
+    - family: Baloo Tamma 2 Bold
+      fonts:
+        - asset: assets/fonts/BalooTamma_Bold.ttf
+
+    - family: Baloo Tamma 2 SemiBold
+      fonts:
+        - asset: assets/fonts/BalooTamma_SemiBold.ttf
+
+    - family: Quicksand Bold
+      fonts:
+        - asset: assets/fonts/Quicksand_Bold.ttf
+
+    - family: Quicksand Medium
+      fonts:
+        - asset: assets/fonts/Quicksand_Medium.ttf
+
+    - family: Quicksand Regular
+      fonts:
+        - asset: assets/fonts/Quicksand_Regular.ttf
