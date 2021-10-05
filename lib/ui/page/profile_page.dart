@@ -101,22 +101,22 @@ class ProfilePage extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(children: [
-          Text('PENDING', style: reportLabelStyle),
+          Text(pendingLabel, style: reportLabelStyle),
           const SizedBox(height: 1),
           Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text('PICK UP', style: reportLabelStyle),
+          Text(pickUpLabel, style: reportLabelStyle),
           const SizedBox(height: 1),
           Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text('DISPATCHED', style: reportLabelStyle),
+          Text(dispatchedLabel, style: reportLabelStyle),
           const SizedBox(height: 1),
           Text('00', style: reportCounterStyle)
         ]),
         Column(children: [
-          Text('CANCEL', style: reportLabelStyle),
+          Text(cancelLabel, style: reportLabelStyle),
           const SizedBox(height: 1),
           Text('00', style: reportCounterStyle)
         ])

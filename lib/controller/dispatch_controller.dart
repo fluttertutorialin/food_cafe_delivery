@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../model/dispatch/dispatch.dart';
 import '../model/dispatch/dispatch_response.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ class DispatchController extends GetxController {
 
   final _dispatchRxList = Rxn<List<Dispatch?>>();
   List<Dispatch?>? get dispatchList => _dispatchRxList.value;
+
+  var searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -70,4 +74,8 @@ class DispatchController extends GetxController {
   }
 
   orderDispatchSingleRemove() {}
+
+  searchDispatchOrder(String? value){
+
+  }
 }

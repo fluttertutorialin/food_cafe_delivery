@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../model/order_history/order_history.dart';
 import '../model/order_history/order_history_response.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ class OrderHistoryController extends GetxController {
 
   final _orderHistoryRxList = Rxn<List<OrderHistory?>>();
   List<OrderHistory?>? get dispatchList => _orderHistoryRxList.value;
+
+  var searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -71,5 +75,9 @@ class OrderHistoryController extends GetxController {
     ]);
 
     _orderHistoryRxList.value = orderHistoryResponse.orderHistoryList!;
+  }
+
+  searchOrderHistory(String? value){
+
   }
 }

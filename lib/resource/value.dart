@@ -10,6 +10,7 @@ const String orderHistoryTitle = 'Order history';
 const passwordHint = 'Password';
 const emailHint = 'Email';
 const mobileHint = 'Mobile';
+const searchHint = 'Search';
 
 const pickUpButton = 'PICK UP';
 const dispatchButton = 'DISPATCH';
@@ -30,6 +31,10 @@ const orderPickUpDateLabel = 'Pick up';
 const fullNameLabel = 'Full name';
 const mobileLabel = 'Mobile';
 const addressLabel = 'Address';
+const pendingLabel = 'PENDING';
+const pickUpLabel = 'PICK UP';
+const dispatchedLabel = 'DISPATCHED';
+const cancelLabel = 'CANCEL';
 
 const notification = 'Notification';
 const aboutUs = 'About Us';

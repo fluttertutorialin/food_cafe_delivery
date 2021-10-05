@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../model/pick_up/pick_up.dart';
 import '../model/pick_up/pick_up_response.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ class PickUpController extends GetxController {
 
   final _pickUpRxList = Rxn<List<PickUp?>>();
   List<PickUp?>? get pickUpList => _pickUpRxList.value;
+
+  var searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -70,4 +74,8 @@ class PickUpController extends GetxController {
   }
 
   orderSingleRemove() {}
+
+  searchPendingOrder(String? value){
+
+  }
 }
